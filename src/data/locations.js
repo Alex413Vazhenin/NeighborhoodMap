@@ -1,42 +1,47 @@
 export const locations = [
   {
-    name: 'Underground World War II bunker complex',
+    name: 'Central Park',
     location: {
-      address: 'Ulitsa Frunze, 167',
-      lat: 53.196777,
-      lng: 50.098075,
+      address: '59th St to 110th S',
+      lat: 40.785091,
+      lng: -73.968285
     },
+    venueId: '412d2800f964a520df0c1fe3'
   },
   {
-    name: 'Zagorodnyy Park',
+    name: 'Brooklyn Bridge Park',
     location: {
-      address: 'Proseka 1-Ya, 42',
-      lat: 53.231130,
-      lng: 50.164054
+      address: 'Main St (Plymouth St)',
+      lat: 40.694869,
+      lng: -74.001728
     },
+    venueId: '430d0a00f964a5203e271fe3'
   },
   {
-    name: 'Glory square',
+    name: 'Metropolitan Museum of Art',
     location: {
-      address: 'Samara, Samara Oblast, Russia, 443006',
-      lat: 53.203882,
-      lng: 50.110202
+      address: '1000 5th Ave',
+      lat: 40.7791,
+      lng: -73.9628
     },
+    venueId: '427c0500f964a52097211fe3'
   },
   {
-    name: 'Monument to Vasily Chapaev',
+    name: 'Bryant Park',
     location: {
-      address: 'Ulitsa Chapayevskaya',
-      lat: 53.196868,
-      lng: 50.097092
+      address: 'E 42nd St',
+      lat: 40.755603,
+      lng: -73.984931
     },
+    venueId: '3fd66200f964a520d7f11ee3'
   },
   {
-    name: 'Mvts "Samara Kosmicheskaya"',
+    name: 'High Line',
     location: {
-      address: 'Prospekt Lenina, 21',
-      lat: 53.212557,
-      lng: 50.145258
+      address: 'btwn Gansevoort & W 34th St',
+      lat: 40.741943,
+      lng: -74.007774
     },
-  },
+    venueId: '40f1d480f964a5206a0a1fe3'
+  }
 ]

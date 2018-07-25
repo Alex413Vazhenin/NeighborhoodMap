@@ -56,7 +56,7 @@ class App extends Component {
         /**
         * Checks if the markers get Foursquare data from locations.js for all markers
         */
-        if (this.state.markers.length === 12) {
+        if (this.state.markers.length === 5) {
           allLocations = this.state.markers;
           console.log(allLocations);
 
@@ -73,9 +73,17 @@ class App extends Component {
           let address = allLocations[i].location.address;
           let lat = allLocations[i].location.lat;
           let lng = allLocations[i].location.lng;
+          let bestPhoto = '';
+          let rating = '';
+          let likes = '';
+          let tips = '';
           let moreInfo = '';
 
           if (checkGetData === true) {
+            bestPhoto = allLocations[i].bestPhoto.prefix.concat('width300', allLocations[i].bestPhoto.suffix);
+            rating = allLocations[i].rating;
+            likes = allLocations[i].likes.count;
+            tips = allLocations[i].tips.groups[0].items[0].text;
             moreInfo = allLocations[i].canonicalUrl;
           }
 
@@ -88,6 +96,10 @@ class App extends Component {
             address: address,
             lat: lat,
             lng: lng,
+            bestPhoto: bestPhoto,
+            rating: rating,
+            likes: likes,
+            tips: tips,
             moreInfo: moreInfo,
             icon: markerDefault,
             animation: window.google.maps.Animation.DROP
@@ -124,14 +136,30 @@ class App extends Component {
     }
   }
 
-
+  /**
+  * @description Fetch Foursquare data asynchronously
+  * @param {object} location
+  * @param {object} response
+  * @param {object} data
+  * @param {object} error
+  */
   getData() {
     let places = [];
     locations.map((location) =>
-      fetch(`https://api.foursquare.com/v2/venues/search?v=20161016&ll=` +
+      fetch(`https://api.foursquare.com/v2/venues/${location.venueId}` +
         `?client_id=${FS_CLIENT_ID}` +
-        `&client_secret=${FS_CLIENT_SECRET}`)
-        );
+        `&client_secret=${FS_CLIENT_SECRET}` +
+        `&v=20180323`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.meta.code === 200) {
+            places.push(data.response.venue);
+          }
+        }).catch(error => {
+          checkGetData = false;
+          console.log(error);
+        })
+    );
 
     // Updates the markers state with the data obtained
     this.setState({
@@ -163,18 +191,30 @@ class App extends Component {
 */
 
 function addInfoWindow(marker, infowindow) {
+  if (checkGetData === true) {
     infowindow.setContent(
       '<div class="info-wrap">'+
+      '<img class="info-photo" src='+marker.bestPhoto+' alt="Beach photo"><br>'+
       '<h2 class="info-name">'+marker.name+'</h2><br>'+
       '<p class="info-position">Latitude: '+marker.lat+'</p><br>'+
       '<p class="info-position">Longitude: '+marker.lng+'</p><br>'+
       '<p class="info-address">Address: '+marker.address+'</p><br>'+
+      '<p class="info-rating">Rating: '+marker.rating+'</p><br>'+
+      '<p class="info-likes">Likes: '+marker.likes+'</p><br>'+
+      '<p class="info-tips">Tips: "'+marker.tips+'"</p><br>'+
       '<a class="info-link" href='+marker.moreInfo+' target="_blank"><span>For more information<span></a><br>'+
       '<img class="info-fslogo" src='+foursquareLogo+' alt="Powered by Foursquare"><br>'+
       '</div>'
     );
-    infowindow.open(buildMap, marker);
+  } else {
+    infowindow.setContent(
+      '<div class="error-wrap">'+
+      '<p class="error-message">Sorry, Foursquare data can&apos;t be loaded!</p><br>'+
+      '</div>'
+    );
   }
+  infowindow.open(buildMap, marker);
+}
 
 
 

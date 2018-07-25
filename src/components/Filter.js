@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import markerDefault from '../images/marker-default.png';
 import foursquareLogo from '../images/foursquare.png';
+import { checkGetData } from './App';
 
 class Filter extends Component {
   // React constructor
@@ -104,18 +105,29 @@ class Filter extends Component {
   * Opens the infowindow when a list item is activated,
   * checks and activates the animations
   */
-  openInfoWindow = (e) => {
+    openInfoWindow = (e) => {
     console.log(e);
     this.state.markers.forEach((marker) => {
       if (e.name === marker.name) {
+        if (checkGetData === true) {
           this.state.infowindow.setContent(
             '<div class="info-wrap">'+
+            '<img class="info-photo" src='+e.bestPhoto+' alt="Beach photo"><br>'+
             '<h2 class="info-name">'+e.name+'</h2><br>'+
             '<p class="info-position">Latitude: '+e.lat+'</p><br>'+
             '<p class="info-position">Longitude: '+e.lng+'</p><br>'+
             '<p class="info-address">Address: '+e.address+'</p><br>'+
+            '<p class="info-rating">Rating: '+e.rating+'</p><br>'+
+            '<p class="info-likes">Likes: '+e.likes+'</p><br>'+
+            '<p class="info-tips">Tips: "'+e.tips+'"</p><br>'+
             '<a class="info-link" href='+e.moreInfo+' target="_blank"><span>For more information<span></a><br>'+
             '<img class="info-fslogo" src='+foursquareLogo+' alt="Powered by Foursquare"><br>'+
+            '</div>'
+          );
+        } else {
+          this.state.infowindow.setContent(
+            '<div class="error-wrap">'+
+            '<p class="error-message">Sorry, Foursquare data can&apos;t be loaded!</p><br>'+
             '</div>'
           );
         }
@@ -131,7 +143,7 @@ class Filter extends Component {
           }, 1000);
         }
       }
-    );
+    });
   }
 
   // Renders the filter, markers list and header
