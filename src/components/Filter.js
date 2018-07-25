@@ -163,7 +163,7 @@ class Filter extends Component {
           title='Open filter'>
           Filter
         </div>
-        <h1 className='app-title'>Points of interest in Samara</h1>
+        <h1 className='app-title'>Points of interest in New York</h1>
 
         <div id='filter' className='filter'>
           <div className='filter-top'>
