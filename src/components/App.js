@@ -14,6 +14,10 @@ import markerDefault from '../images/marker-default.png';
 let buildMap = {};
 export let checkGetData = '';
 
+window.gm_authFailure = function() {
+   alert('Could not load Google Maps API');
+}
+
 class App extends Component {
   // React constructor
   constructor(props) {
@@ -131,8 +135,6 @@ class App extends Component {
         });
       }, 1200);
     // Indication when the map can't be loaded
-    } else {
-      alert('Could not coonect to Google Maps API');
     }
   }
 
